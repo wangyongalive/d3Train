@@ -1,0 +1,77 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>饼状图</title>
+</head>
+
+<style>
+</style>
+
+<body>
+    <script src="https://cdn.bootcss.com/d3/3.5.15/d3.js"></script>
+    <script>
+
+        var width = 400;
+        var height = 400;
+        var dataset = [30, 10, 43, 55, 13]; // 数据
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        var pie = d3.layout.pie();
+
+        var piedata = pie(dataset);
+
+
+
+
+        // 绘制饼状图需要使用弧生成器
+        var outerRadius = 150;	//外半径
+        var innerRadius = 0;	//内半径，为0则中间没有空白
+
+        var arc = d3.svg.arc()	//弧生成器
+            .innerRadius(innerRadius)	//设置内半径
+            .outerRadius(outerRadius);	//设置外半径
+
+        var color = d3.scale.category10(); // 一个颜色比例尺
+
+        // 在 svg 里添加足够数量的分组元素（g），每一个分组用于存放一段弧的相关元素
+        var arcs = svg.selectAll("g")
+            .data(piedata)
+            .enter()
+            .append("g")
+            .attr("transform", `translate(${width/2},${width/2})`) // ES6的写法
+        // .attr("transform", "translate(" + (width / 2) + "," + (width / 2) + ")"); // 将所有的g元素平移到画板的中心
+
+        arcs.append("path")   // 添加路径元素
+            .attr("fill", function (d, i) {
+                return color(i); // 设定弧的颜色
+            })
+            // .attr("d", function (d) {
+            //     return arc(d); // 使用弧生成器获取路径
+            // });
+            .attr("d", arc); // arc本身就是一个函数,可以简写为arc
+
+        arcs.append("text")
+        .attr("transform", function (d) {
+                return `translate(${arc.centroid(d)})` // ES6的写法
+            })
+            // .attr("transform", function (d) {
+            //     return "translate(" + arc.centroid(d) + ")";
+            // })
+            .attr("text-anchor", "middle")
+            .text(function (d) {
+                return d.data;
+            });
+
+        console.log(dataset);
+        console.log(piedata);
+
+    </script>
+
+</body>
+
+</html>

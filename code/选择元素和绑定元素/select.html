@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>选择</title>
+</head>
+
+<body>
+    <script src="https://cdn.bootcss.com/d3/3.5.15/d3.js"></script>
+    <p>Apple</p>
+    <p id="myid" class="myclass">Pear</p>
+    <p class="myclass">Banana</p>
+    <script>
+
+        // 原生的JavaScript的写法
+        // http://www.runoob.com/htmldom/htmldom-content.html
+        var paragraphs = document.getElementsByTagName("p");
+        for (var i = 0; i < paragraphs.length; i++) {
+            var paragraph = paragraphs.item(i);
+            paragraph.innerHTML = "hello.";
+            paragraph.style.color = 'red';
+        }
+
+        //  选择第一个p元素
+        // d3.select("body").select("p").style("color","blue").text('world')
+
+        // 选择三个 p 元素
+        // d3.select("body").selectAll("p").style("color", "red");
+
+        // 选择第二个 p 元素
+        // d3.select("body").select("#myid").style("color", "red");
+
+        // 选择后两个 p 元素
+        // d3.select("body").selectAll(".myclass").style("color", "red");
+
+        // 运用 function(d, i)
+        // d3.select(" body").selectAll("p").style("color", function (d, i) {
+            // console.log(d);
+        //     if (i == 0) {
+        //         return "red";
+        //     }
+        // })
+    </script>
+
+</body>
+
+</html>

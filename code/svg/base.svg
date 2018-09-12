@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" version="1.1">
+    <!-- 矩形 -->
+    <rect width="200" height="100" x="20" y="20" style="fill:red;stroke:blue;stroke-width:4"/>
+    <!-- rx 和 ry 属性可使矩形产生圆角 -->
+    <rect width="200" height="100" x="250" y="20" rx="20" ry="10" style="fill:red;stroke:blue;stroke-width:4"/>
+    <!-- 圆 -->
+    <circle cx="100" cy="280" r="80" style="fill:yellow"/>
+    <!-- 椭圆 -->
+    <!-- RX属性定义的水平半径 -->
+    <!-- RY属性定义的垂直半径 -->
+    <ellipse cx="330" cy="280" rx="100" ry="80" style="fill:yellow"/>
+    <!-- 直线  -->
+    <line x1="0" x2="600" y1="0" y2="360" style="stroke:#000;stroke-width:4"/>
+    <!-- 多边形 -->
+    <!-- points 属性定义多边形每个角的 x 和 y 坐标 -->
+    <polygon points="100,20 20,90 20,200" style="fill:green;stroke:orange;stroke-width:4"/>
+    <!-- 曲线 -->
+    <polyline points="100,20 20,90 20,200" style="fill:green;stroke:orange;stroke-width:4" transform="translate(100,0)"/>
+    <!-- 文本 -->
+    <text x="200" y="150" style="fill:purple" textLength="90">
+        I love D3.js
+    </text>
+</svg>

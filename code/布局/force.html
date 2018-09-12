@@ -1,0 +1,101 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>力导向图</title>
+</head>
+
+<style>
+</style>
+
+<body>
+    <script src="https://cdn.bootcss.com/d3/3.5.15/d3.js"></script>
+    <script>		   
+
+        var nodes = [{ name: "桂林" }, { name: "广州" },
+        { name: "厦门" }, { name: "杭州" },
+        { name: "上海" }, { name: "青岛" },
+        { name: "天津" }];
+
+        var edges = [{ source: 0, target: 1 }, { source: 0, target: 2 },
+        { source: 0, target: 3 }, { source: 1, target: 4 },
+        { source: 1, target: 5 }, { source: 1, target: 6 }];
+
+        var width = 400;
+        var height = 400;
+
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        var force = d3.layout.force()
+            .nodes(nodes)		//指定节点数组
+            .links(edges)		//指定连线数组
+            .size([width, height])	//指定范围
+            .linkDistance(90)	// 指定连线长度 默认为20
+            .charge(-400);	// 相互之间的作用力 为正相互吸引 为负相互排斥
+
+        force.start();	// 开始计算布局
+
+        console.log(nodes); // 转换后的节点数组
+        console.log(edges); // 转换后的连线数组
+
+        // 添加连线		还没有给出x,y坐标
+        var svg_edges = svg.selectAll("line")
+            .data(edges)
+            .enter()
+            .append("line")
+            .style("stroke", "#ccc")
+            .style("stroke-width", 1)
+
+
+        var color = d3.scale.category20();
+
+        // 添加节点		还没有给出x,y坐标	
+        var svg_nodes = svg.selectAll("circle")
+            .data(nodes)
+            .enter()
+            .append("circle")
+            .attr("r", 20)
+            .attr("fill", function (d, i) {
+                return color(i);
+            })
+            .call(force.drag);	//使得节点能够拖动
+
+        // 添加描述节点的文字  还没有给出x,y坐标
+        var svg_texts = svg.selectAll("text")
+            .data(nodes)
+            .enter()
+            .append("text")
+            .attr("fill", "black")
+            .attr("dx", 20)
+            .attr("dy", 8)
+            .text(function (d) {
+                return d.name;
+            });
+
+
+        force.on("tick", function () {	// 对运动中的每一步进行监听
+
+            // 更新连线坐标
+            svg_edges.attr("x1", function (d) { return d.source.x; })
+                .attr("y1", function (d) { return d.source.y; })
+                .attr("x2", function (d) { return d.target.x; })
+                .attr("y2", function (d) { return d.target.y; });
+
+            //更新节点坐标
+            svg_nodes.attr("cx", function (d) { return d.x; })
+                .attr("cy", function (d) { return d.y; });
+
+            //更新文字坐标
+            svg_texts.attr("x", function (d) { return d.x; })
+                .attr("y", function (d) { return d.y; });
+        });
+
+    </script>
+
+</body>
+
+</html>
